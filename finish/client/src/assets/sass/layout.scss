@@ -14,13 +14,13 @@ body {
 .footer {
   position: absolute;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .content {
   height: calc(100% - 50px);
   overflow: auto;
   padding: 2rem 3.2rem;
-  box-sizing: border-box;
 }
 
 .footer {

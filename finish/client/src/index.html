@@ -9,11 +9,11 @@
         apiKey: `{SHOPIFY_API_KEY}`,
         shopOrigin: urlParams.get("shop"),
       });
-      console.log(urlParams.get("access_token"))
       setCookie("access_token", urlParams.get("access_token"));
     </script>
   </head>
   <body>
     We got the access token!
+    <partial src="footer.html"></partial>
   </body>
 </html>

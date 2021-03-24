@@ -1,7 +1,6 @@
 <html>
 
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://unpkg.com/@shopify/app-bridge"></script>
     <link rel="stylesheet" href="./assets/css/uptown.css" />
     <link rel="stylesheet" href="./assets/css/style.css" />
@@ -30,11 +29,14 @@
             apiKey: `48e867577957e8550590642627e8a238`,
             shopOrigin: urlParams.get("shop"),
         });
-        console.log(urlParams.get("access_token"))
         setCookie("access_token", urlParams.get("access_token"));
     </script>
 </head>
 
-<body>We got the access token!</body>
+<body>We got the access token!
+    <div class="footer">
+        <p style="margin-bottom: 0;line-height: 48px;">This boilerplate is made by Something Neat Studio</p>
+    </div>
+</body>
 
 </html>
