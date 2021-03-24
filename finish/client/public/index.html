@@ -22,35 +22,19 @@
             document.cookie = name + "=" + (value || "") + "; SameSite=None; Secure; path=/";
         }
     </script>
-    <script>
-        const AppBridge = window["app-bridge"];
-        const createApp = AppBridge.createApp;
-        const apiKey = "48e867577957e8550590642627e8a238";
+    <script type="text/javascript">
         const urlParams = new URLSearchParams(window.location.search);
-        const shopOrigin = urlParams.get("shop");
+        const AppBridge = window["app-bridge"];
+        const createApp = AppBridge.default;
         const app = createApp({
-            apiKey: apiKey,
-            shopOrigin: shopOrigin,
+            apiKey: `48e867577957e8550590642627e8a238`,
+            shopOrigin: urlParams.get("shop"),
         });
-        const Redirect = AppBridge.actions.Redirect;
-        const redirect = Redirect.create(app);
-        const token = getCookie("access_token");
+        console.log(urlParams.get("access_token"))
+        setCookie("access_token", urlParams.get("access_token"));
     </script>
 </head>
 
-<body>
-    <div class="main">
-        <div class="content">
-            <div class="loading">
-                <div class="lds-ellipsis">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
+<body>We got the access token!</body>
 
 </html>

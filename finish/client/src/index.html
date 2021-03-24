@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <partial src="head-scripts.html"></partial>
+    <script type="text/javascript">
+      const urlParams = new URLSearchParams(window.location.search);
+      const AppBridge = window["app-bridge"];
+      const createApp = AppBridge.default;
+      const app = createApp({
+        apiKey: `{SHOPIFY_API_KEY}`,
+        shopOrigin: urlParams.get("shop"),
+      });
+      console.log(urlParams.get("access_token"))
+      setCookie("access_token", urlParams.get("access_token"));
+    </script>
+  </head>
+  <body>
+    We got the access token!
+  </body>
+</html>

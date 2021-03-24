@@ -1,0 +1,99 @@
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/@shopify/app-bridge"></script>
+    <link rel="stylesheet" href="./assets/css/uptown.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <script type="text/javascript">
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(";");
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == " ") c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0)
+                    return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function setCookie(name, value) {
+            document.cookie = name + "=" + (value || "") + "; SameSite=None; Secure; path=/";
+        }
+    </script>
+    <script>
+        // code block 1
+        const AppBridge = window["app-bridge"];
+        const createApp = AppBridge.default;
+        const apiKey = "48e867577957e8550590642627e8a238";
+        const urlParams = new URLSearchParams(window.location.search);
+        const shopOrigin = urlParams.get("shop");
+        const app = createApp({
+            apiKey: apiKey,
+            shopOrigin: shopOrigin,
+        });
+        const Redirect = AppBridge.actions.Redirect;
+        const redirect = Redirect.create(app);
+
+        // code block 2
+        const token = getCookie("access_token");
+        if (token) {
+            pingShopifyAdminAPI()
+                .then(goToIndex)
+                .catch(oauth);
+        } else {
+            oauth();
+        }
+
+        // code block 3
+        function pingShopifyAdminAPI() {
+            return fetch(
+                    `https://168fd7e2ab77.ngrok.io/old-fashioned-boilerplate/us-central1` +
+                    `/getResource?shop=${shopOrigin}&token=${token}&resource=shop`
+                )
+                .then((response) => response.json())
+        }
+
+        // code block 4
+        function oauth() {
+            const redirectUri = `https://168fd7e2ab77.ngrok.io` +
+                `/old-fashioned-boilerplate/us-central1/oauthCallback`;
+            const permissionUrl =
+                `/oauth/authorize?client_id=${apiKey}` +
+                `&scope=read_script_tags,write_script_tags&redirect_uri=${redirectUri}`;
+            if (window.top == window.self) {
+                window.location.assign(`https://${shopOrigin}/admin${permissionUrl}`);
+            } else {
+                redirect.dispatch(Redirect.Action.ADMIN_PATH, permissionUrl);
+            }
+        }
+
+        // code block 5
+        function goToIndex() {
+            const indexUrl = `/index.html?shop=${shopOrigin}&access_token=${token}`
+            if (window.top == window.self) {
+                window.location.assign(`https://${shopOrigin}/admin${indexUrl}`);
+            } else {
+                redirect.dispatch(Redirect.Action.APP, indexUrl);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="content">
+            <div class="loading">
+                <div class="lds-ellipsis">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
