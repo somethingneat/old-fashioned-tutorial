@@ -21,6 +21,16 @@
             document.cookie = name + "=" + (value || "") + "; SameSite=None; Secure; path=/";
         }
     </script>
+    <script type="text/javascript">
+        const urlParams = new URLSearchParams(window.location.search);
+        const AppBridge = window["app-bridge"];
+        const createApp = AppBridge.default;
+        const app = createApp({
+            apiKey: `48e867577957e8550590642627e8a238`,
+            shopOrigin: urlParams.get("shop"),
+        });
+        const message = urlParams.get("message");
+    </script>
 </head>
 
 <body>error</body>

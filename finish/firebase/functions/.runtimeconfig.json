@@ -5,8 +5,8 @@
     },
     "shopify": {
       "client": {
-        "secret": "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",
-        "key": "48e867577957e8550590642627e8a238"
+        "secret": "your-api-secret",
+        "key": "your-api-key"
       }
     }
   }
